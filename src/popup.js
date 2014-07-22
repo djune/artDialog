@@ -136,6 +136,9 @@ $.extend(Popup.prototype, {
     /** 类名 */
     className: 'ui-popup',
 
+    /** 自动关闭时间 当是弱提示框的情况下新增这个功能是有必要的*/
+    autoTime : 2000,
+
     /**
      * 显示浮层
      * @param   {HTMLElement, Event}  指定位置（可选）
@@ -202,6 +205,32 @@ $.extend(Popup.prototype, {
         return this.show.apply(this, arguments);
     },
     
+
+    /**
+     * 自动关闭
+     * 
+     * @param   {Mixed}  （可选）
+     *          {
+     *              anchor:document.getElementById('id'), //需要定位的元素
+     *              time:1000 //自动关闭倒计时时间，单位毫秒（ms）
+     *          }             
+     *          
+     */
+    time : function(opt){       
+        var autoTime = this.autoTime, anchor = undefined; 
+        if(typeof arguments[0] == 'number'){
+            autoTime = opt;
+        }else if(opt){
+            anchor = opt.anchor || undefined;
+            autoTime = opt.time || this.autoTime;  
+        }
+
+        setTimeout(function(){
+            this.close();
+        },autoTime);
+
+        return this.show.apply(this, opt.anchor);       
+    }
     
     /** 关闭浮层 */
     close: function (result) {

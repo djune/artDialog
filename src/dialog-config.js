@@ -18,8 +18,13 @@ define({
     // 设置遮罩透明度
     //backdropOpacity: 0.7,
 
+    // 自动关闭时间 当是弱提示框的情况下新增这个功能是有必要的
+    autoTime : 2000,
+
     // 消息内容
     content: '<span class="ui-dialog-loading">Loading..</span>',
+
+
     
     // 标题
     title: '',
