@@ -225,12 +225,15 @@ $.extend(Popup.prototype, {
             autoTime = opt.time || this.autoTime;  
         }
 
-        setTimeout(function(){
-            this.close();
-        },autoTime);
+        var $this = this;
+        (function($this) {
+            setTimeout(function() {
+                $this.close();
+            }, autoTime);
+        })($this);
 
-        return this.show.apply(this, opt.anchor);       
-    }
+        return this.show.apply(this, anchor);       
+    },
     
     /** 关闭浮层 */
     close: function (result) {

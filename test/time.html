@@ -1,0 +1,78 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>test</title>
+	<style>
+		html, body {
+			height: 100%;
+		}
+		#fixed {
+			position: fixed;
+			bottom: 0;
+			left: 20%;
+		}
+	</style>
+</head>
+<body>
+<button id="test0">关闭所有</button>
+<button id="test">2秒后自动关闭</button>
+<button id="test1">10秒后自动关闭</button>
+<button id="test2">5秒后自动关闭</button>
+<script src="../lib/sea.js"></script>
+<script>
+seajs.config({
+  alias: {
+    "jquery": "jquery-1.10.2.js"
+  }
+});
+</script>
+
+<script>
+seajs.use(['jquery', '../src/dialog'], function ($, dialog) {
+	
+	var d = dialog({
+		content: '我可以支持自动关闭咯..'
+	});
+
+	$('#test0').on('click', function () {
+		d.close();
+	});
+
+	$('#test').on('click', function () {
+		d.content('2 秒后自动关闭').time();
+		var countDown = 1;  //因为动画效果会延迟1秒
+		var timer = setInterval(function(){
+			d.content((countDown--) + ' 秒后自动关闭');
+			if(countDown == 0){
+				clearInterval(timer);
+			}			
+		},1000);	
+	});
+	
+	$('#test1').on('click', function () {		
+		d.content('10 秒后自动关闭').time({anchor:this,time:10000});
+		var countDown = 9; //因为动画效果会延迟1秒
+		var timer = setInterval(function(){
+			d.content((countDown--) + ' 秒后自动关闭');
+			if(countDown == 0){
+				clearInterval(timer);
+			}			
+		},1000);		
+	});
+	
+	$('#test2').on('click', function () {
+		d.content('5 秒后自动关闭').time(5000);
+		var countDown = 4; //因为动画效果会延迟1秒
+		var timer = setInterval(function(){
+			d.content((countDown--) + ' 秒后自动关闭');
+			if(countDown == 0){
+				clearInterval(timer);
+			}			
+		},1000);	
+	});
+
+});
+</script>
+</body>
+</html>
